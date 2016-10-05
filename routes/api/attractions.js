@@ -5,6 +5,7 @@ var db = require('../../models/_db');
 var Hotel = require('../../models/hotel');
 var Restaurant = require('../../models/restaurant');
 var Activity = require('../../models/activity');
+var Day = require('../../models/day')
 
 
 
@@ -13,21 +14,21 @@ var Activity = require('../../models/activity');
 router.get('/hotels', function(req, res, next) {
 	Hotel.findAll()
 		.then(function(hotels) {
-			res.send(hotels)	
+			res.send(hotels)
 		});
 });
 
 router.get('/restaurants', function(req, res, next) {
 	Restaurant.findAll()
 		.then(function(restaurants) {
-			res.send(restaurants)	
+			res.send(restaurants)
 		});
 });
 
 router.get('/activities', function(req, res, next) {
 	Activity.findAll()
 		.then(function(activities) {
-			res.send(activities)	
+			res.send(activities)
 		});
 });
 
@@ -39,7 +40,7 @@ router.get('/activities', function(req, res, next) {
 // })
 // .then(function (restaurants) {
 //   restaurants.forEach(function() {
-  	
+
 //   })
 // })
 // .catch(console.error.bind(console));
@@ -54,6 +55,15 @@ router.get('/activities', function(req, res, next) {
 // })
 // .catch( console.error.bind(console) );
 
+
+// $.ajax({
+// 	method: 'POST',
+// 	url: '/api/days',
+// 	data: Day.number
+// })
+// .then(function(day) {
+// 	$('.day-buttons').append('<button>' + day.number + '</button>')
+// })
 
 
 

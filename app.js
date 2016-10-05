@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var nunjucks = require('nunjucks');
 var path = require('path');
 var api = require('./routes/api/attractions')
+var daysRouter = require('./routes/api/days')
 
 var db = require('./models');
 
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 // serve dynamic routes
 app.use(require('./routes'));
+app.use('/api/days', daysRouter);
 app.use('/api', api);
 
 
