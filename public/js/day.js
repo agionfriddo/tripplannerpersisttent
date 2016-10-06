@@ -100,16 +100,28 @@ var dayModule = (function () {
       case 'hotel':
         if (this.hotel) this.hotel.hide();
         this.hotel = attraction;
-        $.post('/api/days/' + this.id + '/hotel', {hotelId: '1'})
+        $.post('/api/days/' + this.id + '/hotel', {hotelId: this.hotel.id})
           .then(function(val) {
             console.log('val in options', val)
           })
           .catch(console.error);
         break;
       case 'restaurant':
+        this.restaurant = attraction;
+        $.post('/api/days/' + this.id + '/restaurant', {restaurantId: this.restaurant.id})
+          .then(function(val) {
+            console.log('val in options', val)
+          })
+          .catch(console.error);
         utilsModule.pushUnique(this.restaurants, attraction);
         break;
       case 'activity':
+        this.activity = attraction;
+        $.post('/api/days/' + this.id + '/activity', {activityId: this.activity.id})
+          .then(function(val) {
+            console.log('val in options', val)
+          })
+          .catch(console.error);
         utilsModule.pushUnique(this.activities, attraction);
         break;
       default: console.error('bad type:', attraction);
