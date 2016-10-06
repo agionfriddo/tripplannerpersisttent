@@ -94,10 +94,17 @@ var dayModule = (function () {
 
   Day.prototype.addAttraction = function (attraction) {
     // adding to the day object
+    console.log('this', this)
+    console.log('this.number' ,this.id)
     switch (attraction.type) {
       case 'hotel':
         if (this.hotel) this.hotel.hide();
         this.hotel = attraction;
+        $.post('/api/days/' + this.id + '/hotel', {hotelId: '1'})
+          .then(function(val) {
+            console.log('val in options', val)
+          })
+          .catch(console.error);
         break;
       case 'restaurant':
         utilsModule.pushUnique(this.restaurants, attraction);
@@ -107,6 +114,9 @@ var dayModule = (function () {
         break;
       default: console.error('bad type:', attraction);
     }
+
+
+
     // activating UI
     attraction.show();
   };

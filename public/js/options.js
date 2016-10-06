@@ -68,8 +68,16 @@ $(function(){
 		var type = $select.data('type'); // from HTML data-type attribute
 		var id = $select.find(':selected').val();
 		// get associated attraction and add it to the current day in the trip
+
+		// $.post('/api/days/' + .id + '/hotel', {hotelId: id})
+		// .then(function(val) {
+		// 	console.log('val in options', val)
+		// })
+		// .catch(console.error);
+
 		var attraction = attractionsModule.getByTypeAndId(type, id);
 		tripModule.addToCurrent(attraction);
+		// console.log('attraction', attraction)
 	});
 
 });

@@ -24,10 +24,11 @@ var tripModule = (function () {
 
   // jQuery selections
 
-  var $addButton, $removeButton;
+  var $addButton, $removeButton, $optionsPanel;
   $(function () {
     $addButton = $('#day-add');
     $removeButton = $('#day-title > button.remove');
+    $optionsPanel = $('#options-panel');
   });
 
   // method used both internally and externally
@@ -43,13 +44,18 @@ var tripModule = (function () {
   $(function () {
     $addButton.on('click', postDay);
     $removeButton.on('click', deleteCurrentDay);
+    // $optionsPanel.on('click', 'button[data-action="add"]', function() {
+    //   console.log('???')
+    // } )
   });
 
 
+  
 
-  function addDay () {
+  function addDay (dayInfo) {
     if (this && this.blur) this.blur(); // removes focus box from buttons
-    var newDay = dayModule.create({ number: days.length + 1 }); // dayModule
+    var newDay = dayModule.create(dayInfo); // dayModule
+    // { number: days.length + 1 }
     days.push(newDay);
     if (days.length === 1) {
       currentDay = newDay;
@@ -63,7 +69,8 @@ var tripModule = (function () {
   })
   .then(function(days) {
     days.forEach(function(day) {
-      addDay();
+      console.log('day in trips', day)
+      addDay(day);
     })
   })
   .catch(console.error)
@@ -77,11 +84,18 @@ var tripModule = (function () {
         }
       })
       .then(function(value) {
-        addDay()
-        console.log(value);
+        addDay(value);
       })
       .catch(console.error);
     }
+
+
+  // var postHotel = function() {
+  //   $.post('/api/days/' + currentDay.number + '/hotel', {hotelId: })
+  //   .then(successHandler)
+  //   .catch(failureHandler);
+  // }
+
 
 
 
@@ -116,8 +130,9 @@ var tripModule = (function () {
 
     removeFromCurrent: function (attraction) {
       currentDay.removeAttraction(attraction);
-    }
+    },
 
+    currentDay: currentDay
   };
 
   return publicAPI;

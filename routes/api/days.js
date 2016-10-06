@@ -1,7 +1,13 @@
 var express = require('express');
 var router = require('express').Router();
 
-var Day = require('../../models/day.js')
+var db = require('../../models/_db');
+var Hotel = require('../../models/hotel');
+var Restaurant = require('../../models/restaurant');
+var Activity = require('../../models/activity');
+var Day = require('../../models/day')
+
+
 
 module.exports = router;
 
@@ -25,7 +31,18 @@ router.post('/:id/restaurant', function(req, res, next) {
 })
 
 router.post('/:id/hotel', function(req, res, next) {
+	console.log('req.body in days.js', req.body);
+	console.log('req.body in days.js', req.params.id);
+	Day.findById(req.params.id)
+		.then(function(day) {
+			day.setHotel(req.body.hotelId)
+			.then(function(val) {
+			console.log('val in days', val);
+			res.sendStatus(204);
+			})	
 
+		})		
+		.catch(next);
 })
 
 router.post('/:id/activity', function(req, res, next) {
