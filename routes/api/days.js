@@ -11,11 +11,12 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
-
+  Day.findById(req.params.id)
+  .then((day) => res.send(day))
 })
 
 router.post('/', function(req, res, next) {
-	Day.create()
+	Day.create(req.body)
 		.then(newDay => res.send(newDay))
 });
 

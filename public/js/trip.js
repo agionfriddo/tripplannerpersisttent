@@ -41,9 +41,11 @@ var tripModule = (function () {
   // jQuery event binding
 
   $(function () {
-    $addButton.on('click', addDay);
+    $addButton.on('click', postDay);
     $removeButton.on('click', deleteCurrentDay);
   });
+
+
 
   function addDay () {
     if (this && this.blur) this.blur(); // removes focus box from buttons
@@ -54,6 +56,34 @@ var tripModule = (function () {
     }
     switchTo(newDay);
   }
+
+  $.ajax({
+    method: 'GET',
+    url: '/api/days'
+  })
+  .then(function(days) {
+    days.forEach(function(day) {
+      addDay();
+    })
+  })
+  .catch(console.error)
+
+  var postDay = function() {
+    $.ajax({
+        method: 'POST',
+        url: '/api/days',
+        data: {
+          number: days.length + 1
+        }
+      })
+      .then(function(value) {
+        addDay()
+        console.log(value);
+      })
+      .catch(console.error);
+    }
+
+
 
   function deleteCurrentDay () {
     // prevent deleting last day
@@ -74,9 +104,9 @@ var tripModule = (function () {
 
   var publicAPI = {
 
-    load: function () {
-      $(addDay);
-    },
+    // load: function () {
+    //   $(addDay);
+    // },
 
     switchTo: switchTo,
 
